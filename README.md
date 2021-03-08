@@ -1,0 +1,3 @@
+```
+conigPath=./conf/conf.yaml
+```
