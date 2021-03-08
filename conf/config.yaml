@@ -1,0 +1,12 @@
+debug: true
+mysql:
+  ip: 192.168.3.47
+  user: trace
+  password: trace123456
+  port: 30137
+  db_name: trace
+  max_idle: 10
+  max_open: 100
+  charset: utf8mb4
+  log_mode: true
+  loc: Asia/Shanghai
