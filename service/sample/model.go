@@ -22,12 +22,6 @@ func (m *Sample) TableName() string {
 
 var tablename = (&Sample{}).TableName()
 
-
-func (m *Sample) BeforeUpdate() (err error) {
-	m.UpdatedAt = time.Now()
-	return nil
-}
-
 func create(db *gorm.DB, m *Sample) (error, *Sample) {
 	err := db.Table(tablename).Create(m).Error
 	return err, m
@@ -50,6 +44,7 @@ func detailByColumn(db *gorm.DB, group map[string]interface{}) (bool, *Sample) {
 }
 
 func update(db *gorm.DB, m *Sample) (error, *Sample) {
+	m.UpdatedAt = time.Now()
 	err := db.Table(tablename).Where("id = ?", m.ID).Update(m).Error
 	return err, m
 }
