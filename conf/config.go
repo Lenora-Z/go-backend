@@ -9,6 +9,7 @@ type ServerConfig struct {
 	JWTSecret      string             `required:"true" yaml:"jwt_secret"`
 	BaseUrl        string             `yaml:"base_url"`
 	DbConfig       *DBConfig          `required:"true" yaml:"mysql"`
+	MongoConfig    *MongoConfig `required:"true" yaml:"mongo"`
 }
 
 type DBConfig struct {
@@ -22,4 +23,14 @@ type DBConfig struct {
 	MaxOpen  int    `default:"50" yaml:"max_open"`
 	LogMode  bool   `yaml:"log_mode"`
 	Loc      string `required:"true" yaml:"loc"`
+}
+
+type MongoConfig struct {
+	IP       string `yaml:"ip"`
+	User     string `default:"root" yaml:"user"`
+	Password string `default:"" yaml:"password"`
+	Port     string `default:"27017" yaml:"port"`
+	DbName   string `required:"true" yaml:"db_name"`
+	MaxIdle  string `default:"1" yaml:"max_idle"`
+	MaxOpen  string `default:"10" yaml:"max_open"`
 }

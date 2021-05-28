@@ -5,7 +5,7 @@
 package main
 
 import (
-	"git.dataqin.com/lenora/go-backend/server"
+	"github.com/Lenora-Z/go-backend/server"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 	"os"
@@ -15,7 +15,7 @@ import (
 	"time"
 )
 
-func main()  {
+func main() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 
 	setLogLevel()
@@ -42,7 +42,6 @@ func main()  {
 		logrus.Fatal(err)
 	}
 }
-
 
 func setLogLevel() {
 	logrus.SetFormatter(&logrus.JSONFormatter{

@@ -5,7 +5,7 @@
 package server
 
 import (
-	"git.dataqin.com/lenora/go-backend/utils"
+	"github.com/Lenora-Z/go-backend/utils"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"net/http"

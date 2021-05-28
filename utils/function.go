@@ -1,3 +1,8 @@
+//Created by Goland
+//@User: lenora
+//@Date: 2021/1/15
+//@Time: 10:11 上午
+
 package utils
 
 import (
@@ -8,6 +13,7 @@ import (
 	"fmt"
 	uuid "github.com/satori/go.uuid"
 	"github.com/sirupsen/logrus"
+	"golang.org/x/crypto/bcrypt"
 	"io/ioutil"
 	"math/rand"
 	"net/http"
@@ -15,18 +21,26 @@ import (
 	"time"
 )
 
-//Created by Goland
-//@User: lenora
-//@Date: 2021/1/15
-//@Time: 10:11 上午
+func CheckPassword(encodePW string, password string) bool {
+	return bcrypt.CompareHashAndPassword([]byte(encodePW), []byte(password)) == nil
+}
 
-func GetRandomStringSec(lenght int) string {
+func CryptoPassword(password string) (string, error) {
+	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	if err != nil {
+		return "", err
+	}
+	encodePW := string(hash)
+	return encodePW, nil
+}
+
+func GetRandomStringSec(length int) string {
 	str := "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	bytes := []byte(str)
 	bytesLen := len(bytes)
 	result := []byte{}
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
-	for i := 0; i < lenght; i++ {
+	for i := 0; i < length; i++ {
 		result = append(result, bytes[r.Intn(bytesLen)])
 	}
 	return string(result)
@@ -44,15 +58,6 @@ func GetUUid() (string, error) {
 
 }
 
-func IsContain(items []string, item string) bool {
-	for _, eachItem := range items {
-		if eachItem == item {
-			return true
-		}
-	}
-	return false
-}
-
 func MD5(text string) string {
 	ctx := md5.New()
 	ctx.Write([]byte(text))
@@ -60,10 +65,11 @@ func MD5(text string) string {
 }
 
 type HeaderRequest struct {
-	Method string
-	Url    string
-	Header map[string]string
-	Body   string
+	Method      string
+	Url         string
+	Header      map[string]string
+	Body        string
+	ContentType string
 }
 
 type CommonResponse struct {
@@ -88,7 +94,10 @@ func SendRequest(headerRequest *HeaderRequest) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	req.Header.Set("Content-Type", "application/json")
+	if headerRequest.ContentType == "" {
+		headerRequest.ContentType = "application/json"
+	}
+	req.Header.Set("Content-Type", headerRequest.ContentType)
 	header := headerRequest.Header
 	for i := range header {
 		req.Header.Add(i, header[i])

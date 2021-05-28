@@ -20,12 +20,14 @@ const (
 	SUCCESS int16 = 1000
 	FAIL    int16 = 4000
 
+	ACCESS_DENY int16 = 2003
+
 	NOT_FOUND int16 = 3001
 
 	WRONG_PARAM int16 = 4001
 )
 
-var WrongMessage = map[int16]string{
+var WrongMessageEn = map[int16]string{
 	1000: "success",
 
 	2001: "user licence expired",
@@ -34,43 +36,89 @@ var WrongMessage = map[int16]string{
 
 	3001: "record not found",
 	3002: "record has been exist",
+	3003: "record can't be changed",
 
 	4000: "fail",
 	4001: "param error",
+}
 
-	5001: "connect source error",
+var WrongMessageZh = map[int16]string{
+	1000: "请求成功",
+
+	2001: "用户凭证过期",
+	2002: "用户错误",
+	2003: "权限验证失败",
+
+	3001: "记录未找到",
+	3002: "记录已存在",
+	3003: "记录禁止修改",
+
+	4000: "请求失败",
+	4001: "参数错误",
 }
 
 func (this *defaultServer) InvalidParametersError(c *gin.Context) {
-	responseError(c, WRONG_PARAM, nil)
+	responseError(c, WRONG_PARAM, nil, this.getLanguage(c))
 }
 
 func (this *defaultServer) InternalServiceError(c *gin.Context, message ...string) {
-	responseError(c, FAIL, message)
+	responseError(c, FAIL, message, this.getLanguage(c))
 }
 
 func (this *defaultServer) ResponseError(c *gin.Context, code int16, message ...string) {
-	responseError(c, code, message)
+	responseError(c, code, message, this.getLanguage(c))
 }
 
 func (this *defaultServer) ResponseSuccess(c *gin.Context, result interface{}, msg ...string) {
-	responseOutput(c, SUCCESS, msg, result)
+	if len(msg) == 0 {
+		lang := this.getLanguage(c)
+		msg = append(msg, getResponseMsgWithLang(SUCCESS, lang))
+	}
+	responseOutput(c, SUCCESS, msg[0], result)
 }
 
-func responseError(c *gin.Context, code int16, message []string) {
-	responseOutput(c, code, message, nil)
-}
-
-func responseOutput(c *gin.Context, code int16, message []string, result interface{}) {
+func responseError(c *gin.Context, code int16, message []string, lang string) {
 	var msg string
-	if len(message) <= 0 {
-		msg = WrongMessage[code]
+	if len(message) == 0 {
+		msg = getResponseMsgWithLang(code, lang)
 	} else {
 		msg = message[0]
 	}
+	responseOutput(c, code, msg, nil)
+}
+
+// @Summary 返回码
+// @Tags response
+// @Accept  json
+// @Produce  json
+// @Success 1000 {object} ApiResponse{result=object} "请求成功"
+// @Failure 2001 {string} ApiResponse{} "用户凭证过期"
+// @Failure 2002 {string} ApiResponse{} "用户错误"
+// @Failure 2003 {string} ApiResponse{} "权限验证失败"
+// @Failure 3001 {string} ApiResponse{} "记录未找到"
+// @Failure 3002 {string} ApiResponse{} "记录已存在"
+// @Failure 3003 {string} ApiResponse{} "记录禁止修改"
+// @Failure 4000 {string} ApiResponse{} "请求失败"
+// @Failure 4001 {string} ApiResponse{} "参数错误"
+// @Router / [get]
+func responseOutput(c *gin.Context, code int16, message string, result interface{}) {
+	if result == nil {
+		result = ""
+	}
 	c.JSON(http.StatusOK, ApiResponse{
 		Code:    code,
-		Message: msg,
+		Message: message,
 		Result:  result,
 	})
+}
+
+func getResponseMsgWithLang(code int16, lang string) string {
+	var msg string
+	switch lang {
+	case "zh":
+		msg = WrongMessageZh[code]
+	default:
+		msg = WrongMessageEn[code]
+	}
+	return msg
 }

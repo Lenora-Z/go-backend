@@ -5,9 +5,10 @@
 package server
 
 import (
+	"context"
 	"fmt"
-	"git.dataqin.com/lenora/go-backend/conf"
-	"git.dataqin.com/lenora/go-backend/docs"
+	"github.com/Lenora-Z/go-backend/conf"
+	"github.com/Lenora-Z/go-backend/docs"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"github.com/jinzhu/configor"
@@ -17,8 +18,11 @@ import (
 	"github.com/sirupsen/logrus"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"net/url"
 	"strings"
+	"time"
 )
 
 type Server interface {
@@ -27,11 +31,12 @@ type Server interface {
 }
 
 type defaultServer struct {
-	name   string
-	port   string
-	conf   *conf.ServerConfig
-	db     *gorm.DB
-	engine *gin.Engine
+	name    string
+	port    string
+	conf    *conf.ServerConfig
+	db      *gorm.DB
+	mongoDb *mongo.Database
+	engine  *gin.Engine
 }
 
 func NewServer(name string, port string) Server {
@@ -98,6 +103,17 @@ func (ds *defaultServer) dbClient() error {
 	return nil
 }
 
+func (rs *defaultServer) mongoClient() error {
+	db, err := getMongoConnection(rs.conf.MongoConfig)
+	if err != nil {
+		return fmt.Errorf("%+v", err)
+	}
+	//rs.mongoDB = db
+	rs.mongoDb = db.Database(rs.conf.MongoConfig.DbName)
+
+	return nil
+}
+
 func (ds *defaultServer) initRouter() error {
 	r := gin.New()
 	r.Use(gin.Logger())
@@ -134,6 +150,19 @@ func getDbConnection(conf *conf.DBConfig, maxIdle, maxOpen int) (*gorm.DB, error
 	}
 	db.DB().SetMaxIdleConns(idle)
 	db.DB().SetMaxOpenConns(open)
+	return db, nil
+}
+
+// https://mongodb-documentation.readthedocs.io/en/latest/reference/connection-string.html#gsc.tab=0
+func getMongoConnection(conf *conf.MongoConfig) (*mongo.Client, error) {
+	format := "mongodb://%s:%s@%s:%s/%s?maxPoolSize=%s&minPoolSize=%s"
+	uri := fmt.Sprintf(format, conf.User, conf.Password, conf.IP, conf.Port, conf.DbName, conf.MaxOpen, conf.MaxIdle)
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+	db, err := mongo.Connect(ctx, options.Client().ApplyURI(uri))
+	if err != nil {
+		return nil, err
+	}
 	return db, nil
 }
 
