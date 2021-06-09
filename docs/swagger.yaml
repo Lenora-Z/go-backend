@@ -1,0 +1,1239 @@
+definitions:
+  client.Client:
+    properties:
+      api_url:
+        type: string
+      app_id:
+        type: string
+      app_key:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      name:
+        description: 机构名称
+        type: string
+      status:
+        description: 状态值 1-启用 2-禁用
+        type: integer
+      type:
+        description: 类型
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  model.Attr:
+    properties:
+      attdesc:
+        type: string
+      attname:
+        type: string
+      attnotnull:
+        type: boolean
+      attnum:
+        type: integer
+      atttypname:
+        type: string
+    type: object
+  model.Param:
+    properties:
+      columndef:
+        items:
+          $ref: '#/definitions/model.Attr'
+        type: array
+    type: object
+  server.AddSourceRequest:
+    properties:
+      days:
+        type: integer
+      ds_database:
+        type: string
+      ds_ip:
+        type: string
+      ds_name:
+        type: string
+      ds_password:
+        type: string
+      ds_port:
+        type: integer
+      ds_type:
+        type: string
+      ds_username:
+        type: string
+    required:
+    - days
+    - ds_database
+    - ds_ip
+    - ds_name
+    - ds_password
+    - ds_port
+    - ds_type
+    - ds_username
+    type: object
+  server.AddUserRequest:
+    properties:
+      api_status:
+        description: 接口状态
+        type: integer
+      name:
+        type: string
+      url:
+        type: string
+    required:
+    - api_status
+    - name
+    - url
+    type: object
+  server.ApiResponse:
+    properties:
+      code:
+        description: 状态码
+        type: integer
+      message:
+        description: 状态短语
+        type: string
+      result:
+        description: 数据结果集
+        type: object
+    type: object
+  server.ChainData:
+    properties:
+      hash:
+        type: string
+      status:
+        type: integer
+    type: object
+  server.ConnTestJSONReq:
+    properties:
+      dbname:
+        type: string
+      ds_id:
+        type: integer
+      ds_type:
+        type: string
+      ip:
+        type: string
+      password:
+        type: string
+      port:
+        type: integer
+      username:
+        type: string
+    type: object
+  server.DetailColumn:
+    properties:
+      admin_id:
+        type: integer
+      column_comment:
+        type: string
+      column_name:
+        type: string
+      column_size:
+        type: integer
+      column_status:
+        type: boolean
+      column_type:
+        type: string
+      column_version:
+        type: integer
+      created_at:
+        type: string
+      data_table_name:
+        type: string
+      id:
+        type: integer
+      table_id:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  server.DetailColumnList:
+    items:
+      $ref: '#/definitions/server.DetailColumn'
+    type: array
+  server.GetColumnsListView:
+    properties:
+      columnsList:
+        $ref: '#/definitions/source.ColumnList'
+        type: object
+      count:
+        type: integer
+    type: object
+  server.GetDataModelListView:
+    properties:
+      data_model_list:
+        items:
+          $ref: '#/definitions/server.ModelAttr'
+        type: array
+      total:
+        type: integer
+    type: object
+  server.GetSourceListVO:
+    properties:
+      count:
+        type: integer
+      sourceList:
+        items:
+          $ref: '#/definitions/server.sourceItem'
+        type: array
+    type: object
+  server.GetTableListView:
+    properties:
+      count:
+        type: integer
+      tableList:
+        items:
+          $ref: '#/definitions/source.DataTable'
+        type: array
+    type: object
+  server.GetUserListView:
+    properties:
+      count:
+        type: integer
+      userList:
+        items:
+          $ref: '#/definitions/server.UserItem'
+        type: array
+    type: object
+  server.ManageClientVO:
+    properties:
+      api_url:
+        description: 请求地址
+        type: string
+      id:
+        description: 机构id
+        type: integer
+      name:
+        description: 机构名称
+        type: string
+    type: object
+  server.ModelAttr:
+    properties:
+      chains:
+        $ref: '#/definitions/server.ChainData'
+        type: object
+      created_at:
+        type: string
+      ds_id:
+        description: 源id
+        type: integer
+      id:
+        type: integer
+      model_name:
+        description: 模型名称
+        type: string
+      model_status:
+        description: 状态 0-未启用 1-启用 2-禁用
+        type: integer
+      model_use_type:
+        description: 使用范围
+        type: string
+    required:
+    - model_name
+    - model_use_type
+    type: object
+  server.ModelItem:
+    properties:
+      chains:
+        $ref: '#/definitions/server.ChainData'
+        type: object
+      column_ref_v_2:
+        $ref: '#/definitions/server.DetailColumnList'
+        type: object
+      created_at:
+        type: string
+      ds:
+        additionalProperties: true
+        type: object
+      ds_id:
+        description: 源id
+        type: integer
+      id:
+        type: integer
+      model_code:
+        description: 模型代码
+        type: string
+      model_comment:
+        description: 模型介绍
+        type: string
+      model_function:
+        description: 方法名
+        type: string
+      model_language:
+        description: 代码语言
+        type: string
+      model_name:
+        description: 模型名称
+        type: string
+      model_params:
+        $ref: '#/definitions/model.Param'
+        type: object
+      model_returns:
+        $ref: '#/definitions/model.Param'
+        type: object
+      model_status:
+        description: 状态 0-未启用 1-启用 2-禁用
+        type: integer
+      model_type:
+        description: 类型
+        type: integer
+      model_use_type:
+        description: 使用范围
+        type: string
+      model_use_type_range:
+        description: insert to relation data_model_use_range
+        items:
+          type: integer
+        type: array
+      table_ref:
+        additionalProperties:
+          items:
+            type: integer
+          type: array
+        description: insert to relation data_model additional columns
+        type: object
+    required:
+    - column_ref_v_2
+    - model_code
+    - model_comment
+    - model_function
+    - model_language
+    - model_name
+    - model_params
+    - model_returns
+    - model_type
+    - model_use_type
+    - table_ref
+    type: object
+  server.ModelStatusArg:
+    properties:
+      id:
+        type: integer
+      model_status:
+        type: integer
+    required:
+    - id
+    - model_status
+    type: object
+  server.Req:
+    properties:
+      columns_ref_v2:
+        $ref: '#/definitions/server.DetailColumnList'
+        description: insert to relation data_model_columns_map
+        type: object
+      function_name:
+        type: string
+      input:
+        type: string
+      model_code:
+        type: string
+      model_params:
+        $ref: '#/definitions/model.Param'
+        type: object
+      model_returns:
+        $ref: '#/definitions/model.Param'
+        type: object
+      model_use_type_range:
+        description: insert to relation data_model_use_range
+        items:
+          type: integer
+        type: array
+      table_ref:
+        additionalProperties:
+          items:
+            type: integer
+          type: array
+        description: insert to relation data_model additional columns
+        type: object
+    required:
+    - columns_ref_v2
+    - function_name
+    - input
+    - model_code
+    - model_params
+    - model_returns
+    - table_ref
+    type: object
+  server.SettingRequest:
+    properties:
+      api_status:
+        type: boolean
+      id:
+        type: integer
+      lotus_database:
+        type: string
+      lotus_ip:
+        type: string
+      lotus_password:
+        type: string
+      lotus_port:
+        type: integer
+      lotus_username:
+        type: string
+      max_task:
+        type: integer
+    required:
+    - api_status
+    - id
+    - lotus_database
+    - lotus_ip
+    - lotus_password
+    - lotus_port
+    - lotus_username
+    - max_task
+    type: object
+  server.SourceUpdateArg:
+    properties:
+      days:
+        description: 有效期
+        type: integer
+      ds_name:
+        description: 数据源名称
+        type: string
+      id:
+        type: integer
+    required:
+    - id
+    type: object
+  server.UpdateClientRequest:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      status:
+        type: integer
+    required:
+    - id
+    - name
+    - status
+    type: object
+  server.UpdateColumnsRequest:
+    properties:
+      column_comment:
+        type: string
+      column_status:
+        description: 是否开放申请
+        type: boolean
+      id:
+        type: integer
+    required:
+    - id
+    type: object
+  server.UpdateTableRequest:
+    properties:
+      data_table_name:
+        type: string
+      id:
+        type: integer
+      table_comment:
+        type: string
+      table_version:
+        type: integer
+    required:
+    - id
+    type: object
+  server.UserItem:
+    properties:
+      app_id:
+        type: string
+      chains:
+        $ref: '#/definitions/server.ChainData'
+        type: object
+      create_at:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      status:
+        description: 1-启用 2-禁用
+        type: integer
+      url:
+        type: string
+    type: object
+  server.settingItem:
+    properties:
+      api_status:
+        description: api状态
+        type: boolean
+      api_url:
+        description: api地址
+        type: string
+      chain_id:
+        description: 链id
+        type: integer
+      chains:
+        $ref: '#/definitions/server.ChainData'
+        type: object
+      created_at:
+        type: string
+      id:
+        type: integer
+      lotus_database:
+        description: 模型执行环境数据库名
+        type: string
+      lotus_ip:
+        description: 模型执行环境ip
+        type: string
+      lotus_password:
+        description: 模型执行环境密码
+        type: string
+      lotus_port:
+        description: 模型执行环境端口号
+        type: integer
+      lotus_username:
+        description: 模型执行环境用户名
+        type: string
+      max_task:
+        description: 最大任务请求数
+        type: integer
+      name:
+        description: 机构名称
+        type: string
+      updated_at:
+        type: string
+      uu_id:
+        type: string
+    type: object
+  server.sourceItem:
+    properties:
+      admin_id:
+        type: integer
+      chains:
+        $ref: '#/definitions/server.ChainData'
+        description: 链上信息
+        type: object
+      created_at:
+        type: string
+      days:
+        description: 数据源数据有效期
+        type: integer
+      ds_database:
+        description: 数据源数据库名
+        type: string
+      ds_ip:
+        description: 数据源地址
+        type: string
+      ds_name:
+        description: 数据源名称
+        type: string
+      ds_password:
+        description: 数据源密码
+        type: string
+      ds_port:
+        description: 数据源端口
+        type: integer
+      ds_type:
+        description: 数据源类型
+        type: string
+      ds_username:
+        description: 数据源账号
+        type: string
+      id:
+        type: integer
+      source_version:
+        description: 数据源版本号
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  setting.Setting:
+    properties:
+      api_status:
+        description: api状态
+        type: boolean
+      api_url:
+        description: api地址
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      lotus_database:
+        description: 模型执行环境数据库名
+        type: string
+      lotus_ip:
+        description: 模型执行环境ip
+        type: string
+      lotus_password:
+        description: 模型执行环境密码
+        type: string
+      lotus_port:
+        description: 模型执行环境端口号
+        type: integer
+      lotus_username:
+        description: 模型执行环境用户名
+        type: string
+      max_task:
+        description: 最大任务请求数
+        type: integer
+      name:
+        description: 机构名称
+        type: string
+      updated_at:
+        type: string
+      uu_id:
+        type: string
+    type: object
+  source.ColumnList:
+    items:
+      $ref: '#/definitions/source.DataColumns'
+    type: array
+  source.DataColumns:
+    properties:
+      admin_id:
+        type: integer
+      column_comment:
+        type: string
+      column_name:
+        type: string
+      column_size:
+        type: integer
+      column_status:
+        type: boolean
+      column_type:
+        type: string
+      column_version:
+        type: integer
+      created_at:
+        type: string
+      id:
+        type: integer
+      table_id:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  source.DataTable:
+    properties:
+      admin_id:
+        type: integer
+      created_at:
+        type: string
+      data_table_name:
+        type: string
+      ds_id:
+        type: integer
+      id:
+        type: integer
+      table_comment:
+        type: string
+      table_version:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+info:
+  contact: {}
+  license: {}
+paths:
+  /cms/data_columns/list:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 页码
+        in: query
+        name: page
+        required: true
+        type: string
+      - description: 页数
+        in: query
+        name: limit
+        required: true
+        type: string
+      - description: table_id
+        in: query
+        name: table_id
+        required: true
+        type: integer
+      - description: 'column_status: 0 || 1'
+        in: query
+        name: column_status
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/server.ApiResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/server.GetColumnsListView'
+              type: object
+      summary: 获取数据字段列表
+      tags:
+      - DataColumn
+  /cms/data_columns/updateById:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 请求体
+        in: body
+        name: UpdateColumnsRequest
+        required: true
+        schema:
+          $ref: '#/definitions/server.UpdateColumnsRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/server.ApiResponse'
+            - properties:
+                result:
+                  type: object
+              type: object
+      summary: 更新数据字段
+      tags:
+      - DataColumn
+  /cms/data_model/detail:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 模型ID
+        in: query
+        name: model_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/server.ApiResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/server.ModelItem'
+              type: object
+      summary: 获取数据模型详情
+      tags:
+      - DataModel
+  /cms/data_model/list:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 页码
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: 页数
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/server.ApiResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/server.GetDataModelListView'
+              type: object
+      summary: 获取数据模型列表
+      tags:
+      - DataModel
+  /cms/data_model/param/types:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/server.ApiResponse'
+            - properties:
+                result:
+                  items:
+                    type: string
+                  type: array
+              type: object
+      summary: 模型参数或者返回值得类型列表
+      tags:
+      - DataModel
+  /cms/data_model/runTest:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 请求体
+        in: body
+        name: Req
+        required: true
+        schema:
+          $ref: '#/definitions/server.Req'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/server.ApiResponse'
+            - properties:
+                result:
+                  type: object
+              type: object
+      summary: 运行测试
+      tags:
+      - DataModel
+  /cms/data_model/update:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 请求体
+        in: body
+        name: ModelItem
+        required: true
+        schema:
+          $ref: '#/definitions/server.ModelItem'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/server.ApiResponse'
+            - properties:
+                result:
+                  type: integer
+              type: object
+      summary: 更新数据模型
+      tags:
+      - DataModel
+  /cms/data_model/updateStatus:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 请求体
+        in: body
+        name: ModelStatusArg
+        required: true
+        schema:
+          $ref: '#/definitions/server.ModelStatusArg'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/server.ApiResponse'
+            - properties:
+                result:
+                  type: integer
+              type: object
+      summary: 更新模型状态
+      tags:
+      - DataModel
+  /cms/data_source/add:
+    post:
+      consumes:
+      - application/json
+      description: 同步过程中如果有差异，要重新走添加接口，不设更新
+      parameters:
+      - description: 请求体
+        in: body
+        name: AddSourceRequest
+        required: true
+        schema:
+          $ref: '#/definitions/server.AddSourceRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/server.ApiResponse'
+            - properties:
+                result:
+                  type: object
+              type: object
+      summary: 添加数据源
+      tags:
+      - DataSource
+  /cms/data_source/connTest:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 请求体
+        in: body
+        name: ConnTestJSONReq
+        required: true
+        schema:
+          $ref: '#/definitions/server.ConnTestJSONReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/server.ApiResponse'
+            - properties:
+                result:
+                  type: object
+              type: object
+      summary: 数据源连接测试接口
+      tags:
+      - DataSource
+  /cms/data_source/list:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 页码
+        in: query
+        name: page
+        required: true
+        type: string
+      - description: 页数
+        in: query
+        name: limit
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/server.ApiResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/server.GetSourceListVO'
+              type: object
+      summary: 获取数据源列表
+      tags:
+      - DataSource
+  /cms/data_source/sync_metas:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 请求体
+        in: formData
+        name: ds_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/server.ApiResponse'
+            - properties:
+                result:
+                  type: object
+              type: object
+      summary: 同步数据源的元数据
+      tags:
+      - DataSource
+  /cms/data_source/updateById:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 请求体
+        in: body
+        name: SourceUpdateArg
+        required: true
+        schema:
+          $ref: '#/definitions/server.SourceUpdateArg'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/server.ApiResponse'
+            - properties:
+                result:
+                  type: object
+              type: object
+      summary: 更新数据源
+      tags:
+      - DataSource
+  /cms/data_table/list:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: ds_id 源数据Id
+        in: query
+        name: ds_id
+        required: true
+        type: integer
+      - description: 页码
+        in: query
+        name: page
+        required: true
+        type: string
+      - description: 页数
+        in: query
+        name: limit
+        required: true
+        type: string
+      - description: table_comment 表业务描述
+        in: query
+        name: table_comment
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/server.ApiResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/server.GetTableListView'
+              type: object
+      summary: 获取数据表 列表
+      tags:
+      - DataTable
+  /cms/data_table/updateById:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 请求体
+        in: body
+        name: UpdateTableRequest
+        required: true
+        schema:
+          $ref: '#/definitions/server.UpdateTableRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/server.ApiResponse'
+            - properties:
+                result:
+                  type: object
+              type: object
+      summary: 更新数据表
+      tags:
+      - DataTable
+  /cms/setting/get:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/server.ApiResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/server.settingItem'
+              type: object
+      summary: 获取配置详情
+      tags:
+      - Setting
+  /cms/setting/updateById:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 请求体
+        in: body
+        name: SettingRequest
+        required: true
+        schema:
+          $ref: '#/definitions/server.SettingRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/server.ApiResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/setting.Setting'
+              type: object
+      summary: 更新配置表
+      tags:
+      - Setting
+  /cms/user/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 请求体
+        in: body
+        name: AddUserRequest
+        required: true
+        schema:
+          $ref: '#/definitions/server.AddUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/server.ApiResponse'
+            - properties:
+                result:
+                  type: integer
+              type: object
+      summary: 新建调用机构
+      tags:
+      - Client
+  /cms/user/getById:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 机构ID
+        in: query
+        name: user_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/server.ApiResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/client.Client'
+              type: object
+      summary: 获取机构详情
+      tags:
+      - Client
+  /cms/user/list:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - default: "10001"
+        description: 氚用户id
+        in: header
+        name: x-dataqin-userid
+        required: true
+        type: string
+      - default: "1"
+        description: 页码
+        in: query
+        name: page
+        required: true
+        type: string
+      - default: "20"
+        description: 页数
+        in: query
+        name: limit
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/server.ApiResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/server.GetUserListView'
+              type: object
+      summary: 获取机构列表
+      tags:
+      - Client
+  /cms/user/updateById:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 请求体
+        in: body
+        name: UpdateUserRequest
+        required: true
+        schema:
+          $ref: '#/definitions/server.UpdateClientRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/server.ApiResponse'
+            - properties:
+                result:
+                  type: object
+              type: object
+      summary: 更新机构
+      tags:
+      - Client
+  /ims/client/list:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/server.ApiResponse'
+            - properties:
+                result:
+                  items:
+                    $ref: '#/definitions/server.ManageClientVO'
+                  type: array
+              type: object
+      summary: 机构列表
+      tags:
+      - UserClient
+swagger: "2.0"

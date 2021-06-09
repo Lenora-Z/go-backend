@@ -1,0 +1,26 @@
+base:
+    is_dev: false
+out_dir: ./gormstruct/model
+url_tag: json
+language: 中 文
+db_tag: gorm
+simple: false
+is_web_tag: true
+is_web_tag_pk_hidden: false
+singular_table: true
+is_foreign_key: true
+is_out_sql: true
+is_out_func: true
+is_gui: false
+is_table_name: true
+is_null_to_point: false
+is_json_tag: true
+
+db_info:
+    host: 192.168.4.108
+    port: 3306
+    username: root
+    password: 123456
+    database: bpmn
+    type: 0
+

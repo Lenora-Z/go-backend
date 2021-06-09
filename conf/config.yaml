@@ -1,0 +1,22 @@
+debug: true
+jwt_secret: fieg0y-82bld
+mysql:
+  ip: 192.168.3.47
+  user: trace
+  password: trace123456
+  port: 30137
+  db_name: trace
+  max_idle: 10
+  max_open: 100
+  charset: utf8mb4
+  log_mode: true
+  loc: Asia/Shanghai
+
+mongo:
+  ip: 192.168.3.48
+  user: root
+  password: shuqinkeji
+  port: 27017
+  db_name: default-bpmn
+  max_idle: 10
+  max_open: 100

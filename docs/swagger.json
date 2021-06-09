@@ -1,0 +1,1940 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {},
+        "license": {}
+    },
+    "paths": {
+        "/cms/data_columns/list": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "DataColumn"
+                ],
+                "summary": "获取数据字段列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "页码",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "页数",
+                        "name": "limit",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "table_id",
+                        "name": "table_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "column_status: 0 || 1",
+                        "name": "column_status",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/server.ApiResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/server.GetColumnsListView"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/cms/data_columns/updateById": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "DataColumn"
+                ],
+                "summary": "更新数据字段",
+                "parameters": [
+                    {
+                        "description": "请求体",
+                        "name": "UpdateColumnsRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/server.UpdateColumnsRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/server.ApiResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/cms/data_model/detail": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "DataModel"
+                ],
+                "summary": "获取数据模型详情",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "模型ID",
+                        "name": "model_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/server.ApiResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/server.ModelItem"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/cms/data_model/list": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "DataModel"
+                ],
+                "summary": "获取数据模型列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "页码",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页数",
+                        "name": "limit",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/server.ApiResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/server.GetDataModelListView"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/cms/data_model/param/types": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "DataModel"
+                ],
+                "summary": "模型参数或者返回值得类型列表",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/server.ApiResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/cms/data_model/runTest": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "DataModel"
+                ],
+                "summary": "运行测试",
+                "parameters": [
+                    {
+                        "description": "请求体",
+                        "name": "Req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/server.Req"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/server.ApiResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/cms/data_model/update": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "DataModel"
+                ],
+                "summary": "更新数据模型",
+                "parameters": [
+                    {
+                        "description": "请求体",
+                        "name": "ModelItem",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/server.ModelItem"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/server.ApiResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/cms/data_model/updateStatus": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "DataModel"
+                ],
+                "summary": "更新模型状态",
+                "parameters": [
+                    {
+                        "description": "请求体",
+                        "name": "ModelStatusArg",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/server.ModelStatusArg"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/server.ApiResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/cms/data_source/add": {
+            "post": {
+                "description": "同步过程中如果有差异，要重新走添加接口，不设更新",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "DataSource"
+                ],
+                "summary": "添加数据源",
+                "parameters": [
+                    {
+                        "description": "请求体",
+                        "name": "AddSourceRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/server.AddSourceRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/server.ApiResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/cms/data_source/connTest": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "DataSource"
+                ],
+                "summary": "数据源连接测试接口",
+                "parameters": [
+                    {
+                        "description": "请求体",
+                        "name": "ConnTestJSONReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/server.ConnTestJSONReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/server.ApiResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/cms/data_source/list": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "DataSource"
+                ],
+                "summary": "获取数据源列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "页码",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "页数",
+                        "name": "limit",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/server.ApiResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/server.GetSourceListVO"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/cms/data_source/sync_metas": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "DataSource"
+                ],
+                "summary": "同步数据源的元数据",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "请求体",
+                        "name": "ds_id",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/server.ApiResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/cms/data_source/updateById": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "DataSource"
+                ],
+                "summary": "更新数据源",
+                "parameters": [
+                    {
+                        "description": "请求体",
+                        "name": "SourceUpdateArg",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/server.SourceUpdateArg"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/server.ApiResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/cms/data_table/list": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "DataTable"
+                ],
+                "summary": "获取数据表 列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ds_id 源数据Id",
+                        "name": "ds_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "页码",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "页数",
+                        "name": "limit",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "table_comment 表业务描述",
+                        "name": "table_comment",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/server.ApiResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/server.GetTableListView"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/cms/data_table/updateById": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "DataTable"
+                ],
+                "summary": "更新数据表",
+                "parameters": [
+                    {
+                        "description": "请求体",
+                        "name": "UpdateTableRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/server.UpdateTableRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/server.ApiResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/cms/setting/get": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Setting"
+                ],
+                "summary": "获取配置详情",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/server.ApiResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/server.settingItem"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/cms/setting/updateById": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Setting"
+                ],
+                "summary": "更新配置表",
+                "parameters": [
+                    {
+                        "description": "请求体",
+                        "name": "SettingRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/server.SettingRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/server.ApiResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/setting.Setting"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/cms/user/add": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Client"
+                ],
+                "summary": "新建调用机构",
+                "parameters": [
+                    {
+                        "description": "请求体",
+                        "name": "AddUserRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/server.AddUserRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/server.ApiResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/cms/user/getById": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Client"
+                ],
+                "summary": "获取机构详情",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "机构ID",
+                        "name": "user_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/server.ApiResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/client.Client"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/cms/user/list": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Client"
+                ],
+                "summary": "获取机构列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "10001",
+                        "description": "氚用户id",
+                        "name": "x-dataqin-userid",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "default": "1",
+                        "description": "页码",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "default": "20",
+                        "description": "页数",
+                        "name": "limit",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/server.ApiResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/server.GetUserListView"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/cms/user/updateById": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Client"
+                ],
+                "summary": "更新机构",
+                "parameters": [
+                    {
+                        "description": "请求体",
+                        "name": "UpdateUserRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/server.UpdateClientRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/server.ApiResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/ims/client/list": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "UserClient"
+                ],
+                "summary": "机构列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/server.ApiResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/server.ManageClientVO"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "client.Client": {
+            "type": "object",
+            "properties": {
+                "api_url": {
+                    "type": "string"
+                },
+                "app_id": {
+                    "type": "string"
+                },
+                "app_key": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "机构名称",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "状态值 1-启用 2-禁用",
+                    "type": "integer"
+                },
+                "type": {
+                    "description": "类型",
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Attr": {
+            "type": "object",
+            "properties": {
+                "attdesc": {
+                    "type": "string"
+                },
+                "attname": {
+                    "type": "string"
+                },
+                "attnotnull": {
+                    "type": "boolean"
+                },
+                "attnum": {
+                    "type": "integer"
+                },
+                "atttypname": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Param": {
+            "type": "object",
+            "properties": {
+                "columndef": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Attr"
+                    }
+                }
+            }
+        },
+        "server.AddSourceRequest": {
+            "type": "object",
+            "required": [
+                "days",
+                "ds_database",
+                "ds_ip",
+                "ds_name",
+                "ds_password",
+                "ds_port",
+                "ds_type",
+                "ds_username"
+            ],
+            "properties": {
+                "days": {
+                    "type": "integer"
+                },
+                "ds_database": {
+                    "type": "string"
+                },
+                "ds_ip": {
+                    "type": "string"
+                },
+                "ds_name": {
+                    "type": "string"
+                },
+                "ds_password": {
+                    "type": "string"
+                },
+                "ds_port": {
+                    "type": "integer"
+                },
+                "ds_type": {
+                    "type": "string"
+                },
+                "ds_username": {
+                    "type": "string"
+                }
+            }
+        },
+        "server.AddUserRequest": {
+            "type": "object",
+            "required": [
+                "api_status",
+                "name",
+                "url"
+            ],
+            "properties": {
+                "api_status": {
+                    "description": "接口状态",
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "server.ApiResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "状态码",
+                    "type": "integer"
+                },
+                "message": {
+                    "description": "状态短语",
+                    "type": "string"
+                },
+                "result": {
+                    "description": "数据结果集",
+                    "type": "object"
+                }
+            }
+        },
+        "server.ChainData": {
+            "type": "object",
+            "properties": {
+                "hash": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        },
+        "server.ConnTestJSONReq": {
+            "type": "object",
+            "properties": {
+                "dbname": {
+                    "type": "string"
+                },
+                "ds_id": {
+                    "type": "integer"
+                },
+                "ds_type": {
+                    "type": "string"
+                },
+                "ip": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "integer"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "server.DetailColumn": {
+            "type": "object",
+            "properties": {
+                "admin_id": {
+                    "type": "integer"
+                },
+                "column_comment": {
+                    "type": "string"
+                },
+                "column_name": {
+                    "type": "string"
+                },
+                "column_size": {
+                    "type": "integer"
+                },
+                "column_status": {
+                    "type": "boolean"
+                },
+                "column_type": {
+                    "type": "string"
+                },
+                "column_version": {
+                    "type": "integer"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "data_table_name": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "table_id": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "server.DetailColumnList": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/server.DetailColumn"
+            }
+        },
+        "server.GetColumnsListView": {
+            "type": "object",
+            "properties": {
+                "columnsList": {
+                    "type": "object",
+                    "$ref": "#/definitions/source.ColumnList"
+                },
+                "count": {
+                    "type": "integer"
+                }
+            }
+        },
+        "server.GetDataModelListView": {
+            "type": "object",
+            "properties": {
+                "data_model_list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/server.ModelAttr"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "server.GetSourceListVO": {
+            "type": "object",
+            "properties": {
+                "count": {
+                    "type": "integer"
+                },
+                "sourceList": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/server.sourceItem"
+                    }
+                }
+            }
+        },
+        "server.GetTableListView": {
+            "type": "object",
+            "properties": {
+                "count": {
+                    "type": "integer"
+                },
+                "tableList": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/source.DataTable"
+                    }
+                }
+            }
+        },
+        "server.GetUserListView": {
+            "type": "object",
+            "properties": {
+                "count": {
+                    "type": "integer"
+                },
+                "userList": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/server.UserItem"
+                    }
+                }
+            }
+        },
+        "server.ManageClientVO": {
+            "type": "object",
+            "properties": {
+                "api_url": {
+                    "description": "请求地址",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "机构id",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "机构名称",
+                    "type": "string"
+                }
+            }
+        },
+        "server.ModelAttr": {
+            "type": "object",
+            "required": [
+                "model_name",
+                "model_use_type"
+            ],
+            "properties": {
+                "chains": {
+                    "type": "object",
+                    "$ref": "#/definitions/server.ChainData"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "ds_id": {
+                    "description": "源id",
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "model_name": {
+                    "description": "模型名称",
+                    "type": "string"
+                },
+                "model_status": {
+                    "description": "状态 0-未启用 1-启用 2-禁用",
+                    "type": "integer"
+                },
+                "model_use_type": {
+                    "description": "使用范围",
+                    "type": "string"
+                }
+            }
+        },
+        "server.ModelItem": {
+            "type": "object",
+            "required": [
+                "column_ref_v_2",
+                "model_code",
+                "model_comment",
+                "model_function",
+                "model_language",
+                "model_name",
+                "model_params",
+                "model_returns",
+                "model_type",
+                "model_use_type",
+                "table_ref"
+            ],
+            "properties": {
+                "chains": {
+                    "type": "object",
+                    "$ref": "#/definitions/server.ChainData"
+                },
+                "column_ref_v_2": {
+                    "type": "object",
+                    "$ref": "#/definitions/server.DetailColumnList"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "ds": {
+                    "type": "object",
+                    "additionalProperties": true
+                },
+                "ds_id": {
+                    "description": "源id",
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "model_code": {
+                    "description": "模型代码",
+                    "type": "string"
+                },
+                "model_comment": {
+                    "description": "模型介绍",
+                    "type": "string"
+                },
+                "model_function": {
+                    "description": "方法名",
+                    "type": "string"
+                },
+                "model_language": {
+                    "description": "代码语言",
+                    "type": "string"
+                },
+                "model_name": {
+                    "description": "模型名称",
+                    "type": "string"
+                },
+                "model_params": {
+                    "type": "object",
+                    "$ref": "#/definitions/model.Param"
+                },
+                "model_returns": {
+                    "type": "object",
+                    "$ref": "#/definitions/model.Param"
+                },
+                "model_status": {
+                    "description": "状态 0-未启用 1-启用 2-禁用",
+                    "type": "integer"
+                },
+                "model_type": {
+                    "description": "类型",
+                    "type": "integer"
+                },
+                "model_use_type": {
+                    "description": "使用范围",
+                    "type": "string"
+                },
+                "model_use_type_range": {
+                    "description": "insert to relation data_model_use_range",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "table_ref": {
+                    "description": "insert to relation data_model additional columns",
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        }
+                    }
+                }
+            }
+        },
+        "server.ModelStatusArg": {
+            "type": "object",
+            "required": [
+                "id",
+                "model_status"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "model_status": {
+                    "type": "integer"
+                }
+            }
+        },
+        "server.Req": {
+            "type": "object",
+            "required": [
+                "columns_ref_v2",
+                "function_name",
+                "input",
+                "model_code",
+                "model_params",
+                "model_returns",
+                "table_ref"
+            ],
+            "properties": {
+                "columns_ref_v2": {
+                    "description": "insert to relation data_model_columns_map",
+                    "type": "object",
+                    "$ref": "#/definitions/server.DetailColumnList"
+                },
+                "function_name": {
+                    "type": "string"
+                },
+                "input": {
+                    "type": "string"
+                },
+                "model_code": {
+                    "type": "string"
+                },
+                "model_params": {
+                    "type": "object",
+                    "$ref": "#/definitions/model.Param"
+                },
+                "model_returns": {
+                    "type": "object",
+                    "$ref": "#/definitions/model.Param"
+                },
+                "model_use_type_range": {
+                    "description": "insert to relation data_model_use_range",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "table_ref": {
+                    "description": "insert to relation data_model additional columns",
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        }
+                    }
+                }
+            }
+        },
+        "server.SettingRequest": {
+            "type": "object",
+            "required": [
+                "api_status",
+                "id",
+                "lotus_database",
+                "lotus_ip",
+                "lotus_password",
+                "lotus_port",
+                "lotus_username",
+                "max_task"
+            ],
+            "properties": {
+                "api_status": {
+                    "type": "boolean"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "lotus_database": {
+                    "type": "string"
+                },
+                "lotus_ip": {
+                    "type": "string"
+                },
+                "lotus_password": {
+                    "type": "string"
+                },
+                "lotus_port": {
+                    "type": "integer"
+                },
+                "lotus_username": {
+                    "type": "string"
+                },
+                "max_task": {
+                    "type": "integer"
+                }
+            }
+        },
+        "server.SourceUpdateArg": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "days": {
+                    "description": "有效期",
+                    "type": "integer"
+                },
+                "ds_name": {
+                    "description": "数据源名称",
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "server.UpdateClientRequest": {
+            "type": "object",
+            "required": [
+                "id",
+                "name",
+                "status"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        },
+        "server.UpdateColumnsRequest": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "column_comment": {
+                    "type": "string"
+                },
+                "column_status": {
+                    "description": "是否开放申请",
+                    "type": "boolean"
+                },
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "server.UpdateTableRequest": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "data_table_name": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "table_comment": {
+                    "type": "string"
+                },
+                "table_version": {
+                    "type": "integer"
+                }
+            }
+        },
+        "server.UserItem": {
+            "type": "object",
+            "properties": {
+                "app_id": {
+                    "type": "string"
+                },
+                "chains": {
+                    "type": "object",
+                    "$ref": "#/definitions/server.ChainData"
+                },
+                "create_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "status": {
+                    "description": "1-启用 2-禁用",
+                    "type": "integer"
+                },
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "server.settingItem": {
+            "type": "object",
+            "properties": {
+                "api_status": {
+                    "description": "api状态",
+                    "type": "boolean"
+                },
+                "api_url": {
+                    "description": "api地址",
+                    "type": "string"
+                },
+                "chain_id": {
+                    "description": "链id",
+                    "type": "integer"
+                },
+                "chains": {
+                    "type": "object",
+                    "$ref": "#/definitions/server.ChainData"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "lotus_database": {
+                    "description": "模型执行环境数据库名",
+                    "type": "string"
+                },
+                "lotus_ip": {
+                    "description": "模型执行环境ip",
+                    "type": "string"
+                },
+                "lotus_password": {
+                    "description": "模型执行环境密码",
+                    "type": "string"
+                },
+                "lotus_port": {
+                    "description": "模型执行环境端口号",
+                    "type": "integer"
+                },
+                "lotus_username": {
+                    "description": "模型执行环境用户名",
+                    "type": "string"
+                },
+                "max_task": {
+                    "description": "最大任务请求数",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "机构名称",
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "uu_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "server.sourceItem": {
+            "type": "object",
+            "properties": {
+                "admin_id": {
+                    "type": "integer"
+                },
+                "chains": {
+                    "description": "链上信息",
+                    "type": "object",
+                    "$ref": "#/definitions/server.ChainData"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "days": {
+                    "description": "数据源数据有效期",
+                    "type": "integer"
+                },
+                "ds_database": {
+                    "description": "数据源数据库名",
+                    "type": "string"
+                },
+                "ds_ip": {
+                    "description": "数据源地址",
+                    "type": "string"
+                },
+                "ds_name": {
+                    "description": "数据源名称",
+                    "type": "string"
+                },
+                "ds_password": {
+                    "description": "数据源密码",
+                    "type": "string"
+                },
+                "ds_port": {
+                    "description": "数据源端口",
+                    "type": "integer"
+                },
+                "ds_type": {
+                    "description": "数据源类型",
+                    "type": "string"
+                },
+                "ds_username": {
+                    "description": "数据源账号",
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "source_version": {
+                    "description": "数据源版本号",
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "setting.Setting": {
+            "type": "object",
+            "properties": {
+                "api_status": {
+                    "description": "api状态",
+                    "type": "boolean"
+                },
+                "api_url": {
+                    "description": "api地址",
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "lotus_database": {
+                    "description": "模型执行环境数据库名",
+                    "type": "string"
+                },
+                "lotus_ip": {
+                    "description": "模型执行环境ip",
+                    "type": "string"
+                },
+                "lotus_password": {
+                    "description": "模型执行环境密码",
+                    "type": "string"
+                },
+                "lotus_port": {
+                    "description": "模型执行环境端口号",
+                    "type": "integer"
+                },
+                "lotus_username": {
+                    "description": "模型执行环境用户名",
+                    "type": "string"
+                },
+                "max_task": {
+                    "description": "最大任务请求数",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "机构名称",
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "uu_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "source.ColumnList": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/source.DataColumns"
+            }
+        },
+        "source.DataColumns": {
+            "type": "object",
+            "properties": {
+                "admin_id": {
+                    "type": "integer"
+                },
+                "column_comment": {
+                    "type": "string"
+                },
+                "column_name": {
+                    "type": "string"
+                },
+                "column_size": {
+                    "type": "integer"
+                },
+                "column_status": {
+                    "type": "boolean"
+                },
+                "column_type": {
+                    "type": "string"
+                },
+                "column_version": {
+                    "type": "integer"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "table_id": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "source.DataTable": {
+            "type": "object",
+            "properties": {
+                "admin_id": {
+                    "type": "integer"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "data_table_name": {
+                    "type": "string"
+                },
+                "ds_id": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "table_comment": {
+                    "type": "string"
+                },
+                "table_version": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

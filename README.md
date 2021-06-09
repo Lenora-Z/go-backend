@@ -1,2 +1,3 @@
-# go-backend
-example
+```
+conigPath=./conf/conf.yaml
+```
