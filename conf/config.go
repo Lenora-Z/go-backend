@@ -5,11 +5,11 @@
 package conf
 
 type ServerConfig struct {
-	Debug          bool               `yaml:"debug"`
-	JWTSecret      string             `required:"true" yaml:"jwt_secret"`
-	BaseUrl        string             `yaml:"base_url"`
-	DbConfig       *DBConfig          `required:"true" yaml:"mysql"`
-	MongoConfig    *MongoConfig `required:"true" yaml:"mongo"`
+	Debug       bool         `yaml:"debug"`
+	JWTSecret   string       `required:"true" yaml:"jwt_secret"`
+	BaseUrl     string       `yaml:"base_url"`
+	DbConfig    *DBConfig    `required:"true" yaml:"mysql"`
+	MongoConfig *MongoConfig `required:"true" yaml:"mongo"`
 }
 
 type DBConfig struct {
